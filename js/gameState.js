@@ -46,8 +46,8 @@ function create() {
     g.platforms = g.map.createLayer('platforms');
     g.platforms.resizeWorld();
     
-    g.fires = g.map.createLayer('fires');
-    g.fires.resizeWorld();
+    var fire_ = findObjectsByKey(g.map.objects, 'coins', 'asd');
+    console.log(fire_);
     
     g.coins = g.add.group();
     
@@ -67,8 +67,6 @@ function create() {
     
     g.ninjaTimer = g.time.create(false);
     g.ninjaTimer.start();
-    
-    console.log(g.map.objects);
 }
 
 function update() {
@@ -146,4 +144,25 @@ function setPhysics() {
     
     g.player.body.allowGravity = true;
     g.player.body.collideWorldBounds=true;
+}
+
+function findObjectsByKey(objects, layerName, key) {
+    var object_ = objects[layerName];
+    var key_ = key;
+    var res_ = [];
+    
+    if(object_ != undefined) {
+        object_.forEach(function(e) {
+            if(e.properties != undefined) {
+                for(var i=0; i<e.properties.length; i++) {
+                    if(e.properties[i].name == "type" && e.properties[i].value == key_) {
+                        console.log(e);
+                        res_.push(e);
+                    }    
+                }
+            }
+        })
+    }
+    
+    return res_;
 }
